@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-l_s@qv#5y9eq=8!uqqgr*6w%$2tfvzu-7_jgtww$bfc8xrc*ag
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',
+    'http://localhost:8100']
 
 
 # Application definition
@@ -62,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',
+    'http://localhost:8100',
 ]
 
 ROOT_URLCONF = 'spaceapi.urls'
