@@ -19,7 +19,8 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception = True)
         user = serializer.save()
         return Response({
-            "status": "Done"
+            "status": "Done",
+            "data": request.data
         })
 
 class UserViewSet(viewsets.ModelViewSet):

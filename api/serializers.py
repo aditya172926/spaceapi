@@ -7,6 +7,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             'id',
             'username',
+            'first_name',
+            'last_name',
+            'email',
+            'date_joined'
         ]
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -15,6 +19,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'username',
+            'email',
+            'first_name',
+            'last_name',
             'password'
         ]
         extra_kwargs = { 'password': {'write_only': True, 'required': True}}
