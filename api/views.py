@@ -1,15 +1,19 @@
+import re
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import viewsets, generics
+from rest_framework import response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from api.serializers import UserSerializer, RegisterSerializer
+from rest_framework.views import APIView
+from api.serializers import UserSerializer, RegisterSerializer, UserDataSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from .models import UserData
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -47,3 +51,16 @@ class CustomObtainAuthToken(ObtainAuthToken):
         return Response({'token': token.key, 'id': token.user_id})
 
     # In this function both get movies and post movies are working
+
+class UserDataView(viewsets.ModelViewSet):
+    queryset = UserData.objects.all()
+    serializer_class = UserDataSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        print(request.data)
+        return Response(
+            {
+                "data": request.data
+            }
+        )
