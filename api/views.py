@@ -40,27 +40,21 @@ class UserViewSet(viewsets.ModelViewSet):
 @csrf_exempt
 def userLogout(request):
     dictionary = json.loads(request.body)
-    token_user_id = dictionary['key']
-    Token.objects.get(user_id = token_user_id).delete()
+    token_user_name = dictionary['key']
+    Token.objects.get(user = token_user_name).delete()
     return HttpResponse('Done')
 
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         rresponse = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
         token = Token.objects.get(key = rresponse.data['token'])
-        return Response({'token': token.key, 'id': token.user_id})
+        return Response({'token': token.key, 'user_id': token.user_id})
 
     # In this function both get movies and post movies are working
 
 class UserDataView(viewsets.ModelViewSet):
-    queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    def get(self, request, *args, **kwargs):
-        print(request.data)
-        return Response(
-            {
-                "data": request.data
-            }
-        )
+    def get_queryset(self):
+        print(self.request)

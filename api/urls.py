@@ -5,7 +5,7 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'data', views.UserDataView)
+router.register(r'data', views.UserDataView, basename = 'data')
 
 
 # Wire up our API using automatic URL routing.
