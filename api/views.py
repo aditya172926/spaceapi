@@ -1,4 +1,5 @@
 import re
+from django.db.models import query
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import viewsets, generics
@@ -50,11 +51,13 @@ class CustomObtainAuthToken(ObtainAuthToken):
         token = Token.objects.get(key = rresponse.data['token'])
         return Response({'token': token.key, 'user_id': token.user_id})
 
-    # In this function both get movies and post movies are working
-
 class UserDataView(viewsets.ModelViewSet):
+    queryset = UserData.objects.all()
     serializer_class = UserDataSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
-        print(self.request)
+        print(self.request.user.id)
+        data = UserData.objects.filter(author_id=self.request.user.id)
+        print(data.values())
+        return data

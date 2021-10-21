@@ -3,7 +3,7 @@ from .models import UserData
 # Register your models here.
 
 @admin.register(UserData)
-class MovieAdmin(admin.ModelAdmin):
+class UserDataAdmin(admin.ModelAdmin):
     fields = ('author', 'origin')
     list_display = ['author', 'origin']
     search_fields = ('author', 'origin')
