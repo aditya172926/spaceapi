@@ -2,8 +2,10 @@ import re
 from django.db.models import query
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.utils import tree
 from rest_framework import viewsets, generics
 from rest_framework import response
+from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -56,8 +58,15 @@ class UserDataView(viewsets.ModelViewSet):
     serializer_class = UserDataSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         print(self.request.user.id)
         data = UserData.objects.filter(author_id=self.request.user.id)
         print(data.values())
         return data
+
+    def update(self, request, *args, **kwargs):
+        print('called')
+        print(request.data.get("origin"))
+        UserData.objects.filter(author_id = request.data.get("author")).update(origin = request.data.get("origin"))
+        return Response({'sone': 'some'})
