@@ -4,6 +4,6 @@ from .models import UserData
 
 @admin.register(UserData)
 class UserDataAdmin(admin.ModelAdmin):
-    fields = ('author', 'origin')
-    list_display = ['author', 'origin']
-    search_fields = ('author', 'origin')
+    fields = ('author', 'origin', 'continent', 'country')
+    list_display = ['author', 'origin', 'continent', 'country']
+    search_fields = ('author', 'origin', 'continent', 'country')

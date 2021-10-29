@@ -35,5 +35,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = [
             'author',
-            'origin'
+            'origin',
+            'continent',
+            'country'
         ]

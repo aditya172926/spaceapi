@@ -68,5 +68,8 @@ class UserDataView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         print('called')
         print(request.data.get("origin"))
-        UserData.objects.filter(author_id = request.data.get("author")).update(origin = request.data.get("origin"))
+        instance = UserData.objects.filter(author_id = request.data.get("author"))
+        instance.update(origin = request.data.get("origin"))
+        instance.update(continent = request.data.get("continent"))
+        instance.update(country = request.data.get("country"))
         return Response({'sone': 'some'})
